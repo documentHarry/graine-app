@@ -1,0 +1,36 @@
+<a class="back-link" routerLink="/especes">← Retour aux espèces</a>
+
+<h1>Modifier une espèce</h1>
+
+@if (espece$ | async; as espece) {
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <form [formGroup]="especeForm" (ngSubmit)="enregistrer(espece)">
+    <p class="form-help">Le nom commun et le nom scientifique sont obligatoires.</p>
+
+    <div class="form-field">
+      <label for="nomCommun">Nom commun</label>
+      <input id="nomCommun" type="text" formControlName="nomCommun">
+
+      @if (nomCommun && nomCommun.invalid && nomCommun.touched) {
+        <p class="error">Le nom commun est obligatoire.</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="nomScientifique">Nom scientifique</label>
+      <input id="nomScientifique" type="text" formControlName="nomScientifique">
+
+      @if (nomScientifique && nomScientifique.invalid && nomScientifique.touched) {
+        <p class="error">Le nom scientifique est obligatoire.</p>
+      }
+    </div>
+
+    <button type="submit">Enregistrer les modifications</button>
+  </form>
+}
+@else {
+  <p class="message">Chargement de l’espèce...</p>
+}

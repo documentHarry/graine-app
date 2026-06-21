@@ -1,0 +1,38 @@
+@if (utilisateur$ | async; as utilisateur) {
+  <a class="back-link" [routerLink]="['/utilisateurs', utilisateur.idUtilisateur]">← Détail de l'utilisateur</a>
+
+  <h1>Modifier les rôles</h1>
+
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <form [formGroup]="rolesForm" (ngSubmit)="enregistrer(utilisateur)">
+    <section>
+      <h2>{{ getNomComplet(utilisateur) }}</h2>
+      <p class="form-help">Sélectionnez les rôles attribués à cet utilisateur.</p>
+
+      <div class="form-grid">
+        @if (roles$ | async; as roles) {
+          @for (role of roles; track role.idRole) {
+            <div class="form-field">
+              <label>
+                <input type="checkbox" [checked]="isRoleCoche(role)" (change)="modifierRole(role, $event)">
+                {{ role.nomRole }}
+              </label>
+            </div>
+          }
+        }
+      </div>
+    </section>
+
+    <button type="submit">Enregistrer les rôles</button>
+  </form>
+}
+@else {
+  <a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+  <h1>Modifier les rôles</h1>
+
+  <p class="message">Chargement des rôles...</p>
+}

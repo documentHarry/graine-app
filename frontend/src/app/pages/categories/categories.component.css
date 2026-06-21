@@ -1,0 +1,153 @@
+.categories-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.add-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color: #f2a65a;
+  color: #2a1a10;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.add-link:hover {
+  background-color: #ffb86b;
+}
+
+.search-input {
+  width: 240px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #8a5a36;
+  border-radius: 8px;
+  background-color: #f8ead8;
+  color: #d9782d;
+  font-weight: bold;
+}
+
+.search-input-descriptif {
+  width: min(480px, 100%);
+}
+
+.search-input::placeholder {
+  color: #d9782d;
+  opacity: 1;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 16px;
+}
+
+.categorie-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #8a5a36;
+  border-radius: 16px;
+  background-color: #f8ead8;
+  color: #2a1a10;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 18%);
+}
+
+.categorie-card:hover {
+  box-shadow: 0 6px 14px rgb(0 0 0 / 22%);
+}
+
+.categorie-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  margin: 0;
+  color: #d9782d;
+  font-size: 17px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.categorie-count {
+  align-self: flex-start;
+  margin: 0 0 10px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background-color: #b6e0a6;
+  color: #256029;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.categorie-description {
+  margin: 0;
+  color: #5f4b3b;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.view-link,
+.edit-link,
+.delete-link {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.view-link {
+  color: #256029;
+}
+
+.edit-link {
+  color: #7a3e13;
+}
+
+.delete-link {
+  color: #9b1c1c;
+}
+
+.view-link:hover,
+.edit-link:hover,
+.delete-link:hover {
+  text-decoration: underline;
+}
+
+.edit-link:hover {
+  color: #3f7d20;
+}
+
+@media (max-width: 600px) {
+  .categories-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-link,
+  .search-input,
+  .search-input-descriptif {
+    width: 100%;
+  }
+}

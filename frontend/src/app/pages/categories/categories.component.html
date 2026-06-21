@@ -1,0 +1,48 @@
+<div class="categories-header">
+
+  @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+    <a class="add-link" routerLink="/categories/ajouter">Ajouter une catégorie</a>
+  }
+  <input class="search-input" type="text" placeholder="Rechercher par nom" [(ngModel)]="rechercheNom">
+
+  <input class="search-input search-input-descriptif" type="text" placeholder="Rechercher par descriptif" [(ngModel)]="rechercheDescriptif">
+</div>
+
+@if (categories$ | async; as categories) {
+  @if (error) {
+    <p class="message">{{ error }}</p>
+  }
+  @else if (filtrerCategories(categories).length === 0) {
+    <p>Aucune catégorie trouvée.</p>
+  }
+  @else {
+    <section class="categories-grid">
+      @for (categorie of filtrerCategories(categories); track categorie.idCategorie) {
+        <article class="categorie-card">
+          <header class="categorie-header">
+            <h2>{{ categorie.nomCategorie }}</h2>
+          </header>
+
+          <p class="categorie-count">
+            {{ categorie.nombreProduits }} produit(s)
+          </p>
+
+          @if (categorie.descriptif) {
+            <p class="categorie-description">{{ categorie.descriptif }}</p>
+          }
+
+          <div class="actions">
+            <a class="view-link" [routerLink]="['/produits/categorie', categorie.idCategorie]">Voir</a>
+            @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+              <a class="edit-link" [routerLink]="['/categories/modifier', categorie.idCategorie]">Modifier</a>
+              <a class="delete-link" [routerLink]="['/categories/supprimer', categorie.idCategorie]">Supprimer</a>
+            }
+          </div>
+        </article>
+      }
+    </section>
+  }
+}
+@else {
+  <p>Chargement des catégories...</p>
+}

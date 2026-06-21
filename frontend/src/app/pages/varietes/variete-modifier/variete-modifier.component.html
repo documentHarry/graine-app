@@ -1,0 +1,185 @@
+@if (variete$ | async; as variete) {
+  <a class="back-link" [routerLink]="['/varietes', variete.idVariete]">← Détail de la variété</a>
+
+  <h1>Modifier une variété</h1>
+
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <form [formGroup]="varieteForm" (ngSubmit)="enregistrer(variete)">
+    <p class="form-help">Les champs espèce, nom et bio sont obligatoires.</p>
+
+    <section>
+      <h2>Informations générales</h2>
+
+      <div class="form-field">
+        <label for="especeId">Espèce</label>
+
+        <select id="especeId" formControlName="especeId" required>
+          <option [value]="0">Sélectionner une espèce</option>
+
+          @if (especes$ | async; as especes) {
+            @for (espece of especes; track espece.idEspece) {
+              <option [value]="espece.idEspece">
+                {{ espece.nomCommun }} - {{ espece.nomScientifique }}
+              </option>
+            }
+          }
+        </select>
+
+        @if (especeId && especeId.invalid && especeId.touched) {
+          <p class="error">L'espèce est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="nom">Nom de la variété</label>
+        <input id="nom" type="text" formControlName="nom" required>
+
+        @if (nom && nom.invalid && nom.touched) {
+          <p class="error">Le nom de la variété est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="descriptif">Descriptif</label>
+        <textarea id="descriptif" rows="4" formControlName="descriptif"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="bio">Bio</label>
+
+        <select id="bio" formControlName="bio" required>
+          <option [value]="0">Non bio</option>
+          <option [value]="1">Bio</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+      <h2>Culture</h2>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="cycleJours">Cycle en jours</label>
+          <input id="cycleJours" type="number" min="0" formControlName="cycleJours">
+        </div>
+
+        <div class="form-field">
+          <label for="cycleDeVie">Cycle de vie</label>
+          <input id="cycleDeVie" type="text" formControlName="cycleDeVie">
+        </div>
+
+        <div class="form-field">
+          <label for="typeEnsoleillement">Ensoleillement</label>
+          <input id="typeEnsoleillement" type="text" formControlName="typeEnsoleillement">
+        </div>
+
+        <div class="form-field">
+          <label for="typeFeuillage">Feuillage</label>
+          <input id="typeFeuillage" type="text" formControlName="typeFeuillage">
+        </div>
+
+        <div class="form-field">
+          <label for="dateSemisMin">Semis min</label>
+          <input id="dateSemisMin" type="text" formControlName="dateSemisMin">
+        </div>
+
+        <div class="form-field">
+          <label for="dateSemisMax">Semis max</label>
+          <input id="dateSemisMax" type="text" formControlName="dateSemisMax">
+        </div>
+
+        <div class="form-field">
+          <label for="dureeAvantRecolte">Durée avant récolte</label>
+          <input id="dureeAvantRecolte" type="text" formControlName="dureeAvantRecolte">
+        </div>
+
+        <div class="form-field">
+          <label for="typeDeSol">Type de sol</label>
+          <input id="typeDeSol" type="text" formControlName="typeDeSol">
+        </div>
+
+        <div class="form-field">
+          <label for="dureeDeGermination">Durée de germination</label>
+          <input id="dureeDeGermination" type="text" formControlName="dureeDeGermination">
+        </div>
+
+        <div class="form-field">
+          <label for="temperatureMinDeGermination">Température min. germination</label>
+          <input id="temperatureMinDeGermination" type="number" formControlName="temperatureMinDeGermination">
+        </div>
+
+        <div class="form-field">
+          <label for="rusticitePlante">Rusticité</label>
+          <input id="rusticitePlante" type="text" formControlName="rusticitePlante">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Dimensions et distances</h2>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="couleurLegume">Couleur</label>
+          <input id="couleurLegume" type="text" formControlName="couleurLegume">
+        </div>
+
+        <div class="form-field">
+          <label for="tailleFixeLegume">Taille fixe légume</label>
+          <input id="tailleFixeLegume" type="number" min="0" formControlName="tailleFixeLegume">
+        </div>
+
+        <div class="form-field">
+          <label for="tailleMinLegume">Taille min. légume</label>
+          <input id="tailleMinLegume" type="number" min="0" formControlName="tailleMinLegume">
+        </div>
+
+        <div class="form-field">
+          <label for="tailleMaxLegume">Taille max. légume</label>
+          <input id="tailleMaxLegume" type="number" min="0" formControlName="tailleMaxLegume">
+        </div>
+
+        <div class="form-field">
+          <label for="espacementEntreLesPlants">Espacement plants</label>
+          <input id="espacementEntreLesPlants" type="number" min="0" formControlName="espacementEntreLesPlants">
+        </div>
+
+        <div class="form-field">
+          <label for="espacementEntreLesLignes">Espacement lignes</label>
+          <input id="espacementEntreLesLignes" type="number" min="0" formControlName="espacementEntreLesLignes">
+        </div>
+
+        <div class="form-field">
+          <label for="hauteurAdulteMin">Hauteur adulte min</label>
+          <input id="hauteurAdulteMin" type="number" min="0" formControlName="hauteurAdulteMin">
+        </div>
+
+        <div class="form-field">
+          <label for="hauteurAdulteMax">Hauteur adulte max</label>
+          <input id="hauteurAdulteMax" type="number" min="0" formControlName="hauteurAdulteMax">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Conseil de plantation</h2>
+
+      <div class="form-field">
+        <label for="conseilPlantation">Conseil de plantation</label>
+        <textarea id="conseilPlantation" rows="5" formControlName="conseilPlantation"></textarea>
+      </div>
+    </section>
+
+    <button type="submit">Enregistrer les modifications</button>
+  </form>
+}
+@else {
+  <a class="back-link" routerLink="/varietes">← Retour aux variétés</a>
+
+  <h1>Modifier une variété</h1>
+
+  <p class="message">Chargement de la variété...</p>
+}

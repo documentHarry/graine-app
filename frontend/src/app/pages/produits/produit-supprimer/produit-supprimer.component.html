@@ -1,0 +1,32 @@
+@if (produit$ | async; as produit) {
+  <a class="back-link" [routerLink]="['/produits', produit.idProduit]">← Détail du produit</a>
+
+  <h1>Supprimer un produit</h1>
+
+  <section class="delete-card">
+    <h2>{{ produit.intitule }}</h2>
+
+    <p><strong>Variété: </strong>{{ produit.variete.nom }}</p>
+    <p><strong>Espèce: </strong>{{ produit.variete.espece.nomCommun }}</p>
+    <p><strong>Prix: </strong>{{ produit.prixUnitaire }} €</p>
+    <p><strong>Quantité: </strong>{{ produit.quantite }}</p>
+
+    @if (message) {
+      <p class="message-card">{{ message }}</p>
+    }
+
+    <p>Ce produit sera supprimé définitivement.</p>
+
+    <div class="actions">
+      <button type="button" class="delete-button" (click)="supprimerProduit(produit)">Supprimer</button>
+      <button type="button" class="cancel-button" (click)="annuler(produit)">Annuler</button>
+    </div>
+  </section>
+}
+@else {
+  <a class="back-link" routerLink="/produits">← Produits</a>
+
+  <h1>Supprimer un produit</h1>
+
+  <p class="message">Chargement du produit...</p>
+}

@@ -1,0 +1,52 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+a {
+  color: #f2a65a;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #f2c45a;
+  text-decoration: none;
+}
+
+.active {
+  color: #8fd694;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.badge-utilisateur {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  background-color: #8fd694;
+  color: #1f2933;
+
+  font-weight: bold;
+  font-size: 14px;
+}
+
+button {
+  border: 1px solid #f2a65a;
+  border-radius: 6px;
+  background: transparent;
+  color: #f2a65a;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f2a65a;
+  color: #1f2933;
+}

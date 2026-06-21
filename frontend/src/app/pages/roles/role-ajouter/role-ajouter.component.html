@@ -1,0 +1,20 @@
+<a class="back-link" routerLink="/roles">← Retour aux rôles</a>
+
+<h1>Ajouter un rôle</h1>
+
+@if (message) {
+  <p class="message">{{ message }}</p>
+}
+
+<form class="role-form" [formGroup]="roleForm" (ngSubmit)="enregistrer()">
+  <div class="form-field">
+    <label for="nomRole">Nom du rôle</label>
+    <input id="nomRole" type="text" formControlName="nomRole" placeholder="Exemple : ADMIN">
+
+    @if (nomRole && nomRole.invalid && nomRole.touched) {
+      <p class="error">Le nom du rôle est obligatoire.</p>
+    }
+  </div>
+
+  <button type="submit">Enregistrer</button>
+</form>

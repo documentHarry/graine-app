@@ -1,0 +1,40 @@
+@if (proprietes$ | async; as proprietes) {
+
+  <section class="proprietes-card">
+    <div class="page-header">
+      <h2>Liste des propriétés</h2>
+
+      <input class="search-input" type="text" placeholder="Rechercher une propriété"
+       [(ngModel)]="recherche">
+
+      <a class="add-button" routerLink="/proprietes-medicinales/ajouter">Ajouter une propriété</a>
+    </div>
+
+    @if (proprietesFiltrees(proprietes).length === 0) {
+      <p>Aucune propriété médicinale enregistrée.</p>
+    }
+    @else {
+      <div class="proprietes-grid">
+        @for (propriete of proprietesFiltrees(proprietes); track propriete.idPropriete) {
+          <article class="propriete-item">
+            <strong>{{ propriete.nomPropriete }}</strong>
+
+            <div class="actions">
+              <a class="edit-button" [routerLink]="['/proprietes-medicinales/modifier', propriete.idPropriete]">
+                Modifier
+              </a>
+
+              <a class="delete-button" [routerLink]="['/proprietes-medicinales/supprimer', propriete.idPropriete]">
+                ✕
+              </a>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+}
+@else {
+  <p>Chargement des propriétés médicinales...</p>
+}

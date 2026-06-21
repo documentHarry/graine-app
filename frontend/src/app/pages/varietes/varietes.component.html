@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h2>Variété</h2>
+  @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+    <a class="add-link" routerLink="/varietes/ajouter">Ajouter une variété</a>
+  }
+</div>
+
+@if (varietes$ | async; as varietes) {
+
+  <div class="varietes-layout">
+
+    <app-variete-filtres
+      [(rechercheNom)]="rechercheNom"
+      [(bioRecherche)]="bioRecherche"
+      [(especeRecherche)]="especeRecherche"
+      [(ensoleillementRecherche)]="ensoleillementRecherche"
+      [(cycleVieRecherche)]="cycleVieRecherche"
+      [especes]="especesDisponibles(varietes)"
+      [ensoleillements]="ensoleillementsDisponibles(varietes)"
+      [cyclesVie]="cyclesVieDisponibles(varietes)">
+    </app-variete-filtres>
+
+    <section class="varietes-zone">
+      @if (varietesFiltrees(varietes).length === 0) {
+        <p>Aucune variété trouvée. Cliquez sur la croix pour réinitialiser les filtres.</p>
+      }
+      @else {
+        <section class="varietes-grid">
+          @for (variete of varietesFiltrees(varietes); track variete.idVariete) {
+            <article class="variete-card">
+              <header class="variete-header">
+                <div>
+                  <h2>{{ variete.nom }}</h2>
+                  <p class="scientifique">{{ variete.espece.nomScientifique }}</p>
+                </div>
+              </header>
+
+              <div class="infos">
+                <p><strong>Espèce: </strong>{{ variete.espece.nomCommun }}</p>
+                <p><strong>Label: </strong>{{ getLabelBio(variete) }}</p>
+
+                @if (variete.cycleDeVie) {
+                  <p><strong>Cycle de vie: </strong>{{ variete.cycleDeVie }}</p>
+                }
+
+                @if (variete.typeEnsoleillement) {
+                  <p><strong>Ensoleillement: </strong>{{ variete.typeEnsoleillement }}</p>
+                }
+              </div>
+
+              <a class="details-link" [routerLink]="['/varietes', variete.idVariete]">Voir en détail</a>
+            </article>
+          }
+        </section>
+      }
+    </section>
+
+  </div>
+
+}
+@else {
+  <p>Chargement des variétés...</p>
+}

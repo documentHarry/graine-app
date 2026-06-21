@@ -1,0 +1,52 @@
+<a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+@if (utilisateur$ | async; as utilisateur) {
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <article class="detail-card">
+    <header class="detail-header">
+      <div>
+        <h1>{{ getNomComplet(utilisateur) }} : {{ getRolesUtilisateur(utilisateur) }}</h1>
+        <p class="email">{{ utilisateur.email }}</p>
+      </div>
+
+      <span class="statut" [class.inactif]="utilisateur.actif === 0">{{ getStatutUtilisateur(utilisateur) }}</span>
+    </header>
+
+    <section class="actions-section">
+      <h2>Gestion du compte</h2>
+
+      <div class="actions">
+        <a class="edit-link" [routerLink]="['/utilisateurs/modifier', utilisateur.idUtilisateur]">Modifier l'utilisateur</a>
+        <a class="edit-link" [routerLink]="['/utilisateurs/roles', utilisateur.idUtilisateur]">Modifier les rôles</a>
+        <a class="delete-link" [routerLink]="['/utilisateurs/supprimer', utilisateur.idUtilisateur]">Supprimer l'utilisateur</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Informations générales</h2>
+
+      <div class="info-grid">
+        <p><strong>Prénom: </strong>{{ utilisateur.prenom }}</p>
+        <p><strong>Nom: </strong>{{ utilisateur.nom }}</p>
+        <p><strong>Email: </strong>{{ utilisateur.email }}</p>
+
+        @if (utilisateur.dateInscription) {
+          <p><strong>Date d'inscription: </strong>{{ utilisateur.dateInscription }}</p>
+        }
+
+        <p><strong>Statut: </strong>{{ getStatutUtilisateur(utilisateur) }}</p>
+      </div>
+    </section>
+
+    <app-utilisateur-adresses
+      [utilisateurId]="utilisateur.idUtilisateur"
+      [adresses]="getAdresses(utilisateur)">
+    </app-utilisateur-adresses>
+  </article>
+}
+@else {
+  <p class="message">Chargement de l'utilisateur...</p>
+}

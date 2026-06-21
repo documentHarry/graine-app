@@ -1,0 +1,42 @@
+@if (variete$ | async; as variete) {
+  <a class="back-link" [routerLink]="['/varietes', variete.idVariete]">← Détail de la variété</a>
+
+  <h1>Supprimer une variété</h1>
+
+  <section class="delete-card">
+    <h2>{{ variete.nom }}</h2>
+
+    <p class="scientifique">{{ variete.espece.nomScientifique }}</p>
+    <p><strong>Espèce: </strong>{{ variete.espece.nomCommun }}</p>
+    <p><strong>Produits associés: </strong>{{ getNombreProduits(variete) }}</p>
+
+    @if (message) {
+      <p class="message-card">{{ message }}</p>
+    }
+
+    @if (getNombreProduits(variete) === 0) {
+      <p>Cette variété ne possède aucun produit associé. Elle peut être supprimée.</p>
+
+      <div class="actions">
+        <button type="button" class="delete-button" (click)="supprimerVariete(variete)">Supprimer</button>
+        <button type="button" class="cancel-button" (click)="annuler(variete)">
+          Annuler
+        </button>
+      </div>
+    }
+    @else {
+      <p>Cette variété possède des produits associés. Elle ne peut pas être supprimée tant que ces produits existent.</p>
+
+      <div class="actions">
+        <button type="button" class="cancel-button" (click)="annuler(variete)">Retour au détail</button>
+      </div>
+    }
+  </section>
+}
+@else {
+  <a class="back-link" routerLink="/varietes">← Retour aux variétés</a>
+
+  <h1>Supprimer une variété</h1>
+
+  <p class="message">Chargement de la variété...</p>
+}

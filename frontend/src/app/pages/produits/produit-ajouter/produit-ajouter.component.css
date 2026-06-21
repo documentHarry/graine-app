@@ -1,0 +1,98 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #f2a65a;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: #8fd694;
+  text-decoration: underline;
+}
+
+h1 {
+  margin-bottom: 16px;
+  color: #ffb86b;
+}
+
+form {
+  max-width: 680px;
+  padding: 20px;
+  border: 1px solid #8a5a36;
+  border-radius: 12px;
+  background-color: #f8ead8;
+  color: #2a1a10;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #8a5a36;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #f2a65a;
+  color: #2a1a10;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ffb86b;
+}
+
+.message {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #fff3cd;
+  color: #5a3a24;
+}
+
+.error {
+  margin: 6px 0 0;
+  color: #9b1c1c;
+  font-size: 14px;
+}
+
+.form-help {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #5a3a24;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background-color: #f2a65a;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: #9b1c1c;
+}
+
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+  border-color: #4f7f52;
+}

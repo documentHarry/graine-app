@@ -1,0 +1,71 @@
+@if (utilisateur$ | async; as utilisateur) {
+  <a class="back-link" [routerLink]="['/utilisateurs', utilisateur.idUtilisateur]">← Détail de l'utilisateur</a>
+
+  <h1>Ajouter une adresse</h1>
+
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <form class="adresse-form" [formGroup]="adresseForm" (ngSubmit)="enregistrer(utilisateur)">
+    <p class="form-help">Tous les champs sont obligatoires.</p>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="rue">Rue</label>
+        <input id="rue" type="text" formControlName="rue">
+
+        @if (rue && rue.invalid && rue.touched) {
+          <p class="error">La rue est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="numero">Numéro</label>
+        <input id="numero" type="text" formControlName="numero">
+
+        @if (numero && numero.invalid && numero.touched) {
+          <p class="error">Le numéro est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="localiteId">Localité</label>
+
+        <select id="localiteId" formControlName="localiteId" required>
+          <option [value]="0">Sélectionner une localité</option>
+
+          @if (localites$ | async; as localites) {
+            @for (localite of localites; track localite.idLocalite) {
+              <option [value]="localite.idLocalite">
+                {{ localite.codePostal }} {{ localite.nomLocalite }}
+              </option>
+            }
+          }
+        </select>
+
+        @if (localiteId && localiteId.invalid && localiteId.touched) {
+          <p class="error">La localité est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="parDefaut">Type d'adresse</label>
+
+        <select id="parDefaut" formControlName="parDefaut" required>
+          <option [value]="0">Adresse secondaire</option>
+          <option [value]="1">Adresse par défaut</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit">Enregistrer l'adresse</button>
+  </form>
+}
+@else {
+  <a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+  <h1>Ajouter une adresse</h1>
+
+  <p class="message">Chargement des données...</p>
+}

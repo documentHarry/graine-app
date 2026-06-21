@@ -1,0 +1,23 @@
+<section>
+  <div class="section-header">
+    <h2>Adresses de livraison</h2>
+
+    <a class="add-address-button" [routerLink]="['/utilisateurs', utilisateurId(), 'adresses', 'ajouter']">Ajouter une adresse</a>
+  </div>
+
+  @if (adresses().length === 0) {
+    <p>Aucune adresse enregistrée.</p>
+  }
+  @else {
+    @for (adresse of adresses(); track adresse.idAdresse) {
+      <div class="adresse-card">
+        <p><strong>{{ getAdresseComplete(adresse) }}</strong></p>
+        <p>{{ getLabelAdresseParDefaut(adresse) }}</p>
+
+        <a class="edit-address-button" [routerLink]="['/utilisateurs', utilisateurId(), 'adresses', 'modifier', adresse.idAdresse]">Modifier l'adresse</a>
+
+        <a class="delete-address-button" [routerLink]="['/utilisateurs', utilisateurId(), 'adresses', 'supprimer', adresse.idAdresse]">Supprimer l'adresse</a>
+      </div>
+    }
+  }
+</section>

@@ -1,0 +1,43 @@
+<div class="especes-header">
+  @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+    <a class="add-link" routerLink="/especes/ajouter">Ajouter une espèce</a>
+  }
+  <input class="search-input" type="text" placeholder="Rechercher par nom commun"
+    [(ngModel)]="rechercheNomCommun">
+
+  <input class="search-input search-input-scientifique" type="text" placeholder="Rechercher par nom scientifique"
+    [(ngModel)]="rechercheNomScientifique">
+</div>
+
+@if (especes$ | async; as especes) {
+
+  @if (especesFiltrees(especes).length === 0) {
+    <p>Aucune espèce trouvée.</p>
+  }
+  @else {
+    <section class="especes-grid">
+      @for (espece of especesFiltrees(especes); track espece.idEspece) {
+        <article class="espece-card">
+          <header class="espece-header">
+            <h2>{{ espece.nomCommun }}</h2>
+
+            <span class="varietes-count" [class.empty]="espece.nombreVarietes === 0">{{ espece.nombreVarietes }}</span>
+          </header>
+
+          <p class="scientifique">{{ espece.nomScientifique }}</p>
+
+          <div class="actions">
+            @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+              <a class="edit-link" [routerLink]="['/especes/modifier', espece.idEspece]">Modifier</a>
+              <a class="delete-link" [routerLink]="['/especes/supprimer', espece.idEspece]">Supprimer</a>
+            }
+          </div>
+        </article>
+      }
+    </section>
+  }
+
+}
+@else {
+  <p>Chargement des espèces...</p>
+}

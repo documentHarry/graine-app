@@ -1,0 +1,54 @@
+<a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+<h1>Ajouter un utilisateur</h1>
+
+@if (message) {
+  <p class="message">{{ message }}</p>
+}
+
+<form [formGroup]="utilisateurForm" (ngSubmit)="enregistrer()">
+  <section>
+    <h2>Informations générales</h2>
+    <p class="form-help">Les champs nom, prénom, email et mot de passe sont obligatoires.</p>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="prenom">Prénom</label>
+        <input id="prenom" type="text" formControlName="prenom" required>
+
+        @if (prenom && prenom.invalid && prenom.touched) {
+          <p class="error">Le prénom est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="nom">Nom</label>
+        <input id="nom" type="text" formControlName="nom" required>
+
+        @if (nom && nom.invalid && nom.touched) {
+          <p class="error">Le nom est obligatoire.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" required>
+
+        @if (email && email.invalid && email.touched) {
+          <p class="error">L'email est obligatoire et doit être valide.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="motDePasse">Mot de passe</label>
+        <input id="motDePasse" type="password" formControlName="motDePasse" required>
+
+        @if (motDePasse && motDePasse.invalid && motDePasse.touched) {
+          <p class="error">Le mot de passe est obligatoire.</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <button type="submit">Enregistrer</button>
+</form>

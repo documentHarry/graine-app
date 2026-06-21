@@ -1,0 +1,35 @@
+@if (utilisateur$ | async; as utilisateur) {
+  <a class="back-link" [routerLink]="['/utilisateurs', utilisateur.idUtilisateur]">← Détail de l'utilisateur</a>
+
+  <h1>Supprimer une adresse</h1>
+
+  @if (message && !adresse) {
+    <p class="message">{{ message }}</p>
+  }
+
+  @if (adresse) {
+    <section class="delete-card">
+      <h2>{{ getAdresseComplete(adresse) }}</h2>
+
+      <p>{{ getLabelAdresseParDefaut(adresse) }}</p>
+
+      @if (message) {
+        <p class="message-card">{{ message }}</p>
+      }
+
+      <p>Cette adresse sera supprimée définitivement.</p>
+
+      <div class="actions">
+        <button type="button" class="delete-button" (click)="supprimerAdresse(utilisateur, adresse)">Supprimer</button>
+        <button type="button" class="cancel-button" (click)="annuler(utilisateur)">Annuler</button>
+      </div>
+    </section>
+  }
+}
+@else {
+  <a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+  <h1>Supprimer une adresse</h1>
+
+  <p class="message">Chargement de l’adresse...</p>
+}

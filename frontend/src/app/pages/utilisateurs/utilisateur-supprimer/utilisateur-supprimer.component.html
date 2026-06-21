@@ -1,0 +1,31 @@
+@if (utilisateur$ | async; as utilisateur) {
+  <a class="back-link" [routerLink]="['/utilisateurs', utilisateur.idUtilisateur]">← Détail de l'utilisateur</a>
+
+  <h1>Supprimer un utilisateur</h1>
+
+  <section class="delete-card">
+    <h2>{{ getNomComplet(utilisateur) }}</h2>
+
+    <p class="email">{{ utilisateur.email }}</p>
+    <p><strong>Statut: </strong>{{ utilisateur.actif === 1 ? 'Actif' : 'Inactif' }}</p>
+    <p><strong>Adresses associées: </strong>{{ getNombreAdresses(utilisateur) }}</p>
+
+    @if (message) {
+      <p class="message-card">{{ message }}</p>
+    }
+
+    <p>Cet utilisateur ne sera pas supprimé définitivement. Il sera simplement passé en inactif.</p>
+
+    <div class="actions">
+      <button type="button" class="delete-button" (click)="supprimerUtilisateur(utilisateur)">Désactiver</button>
+      <button type="button" class="cancel-button" (click)="annuler(utilisateur)">Annuler</button>
+    </div>
+  </section>
+}
+@else {
+  <a class="back-link" routerLink="/utilisateurs">← Retour aux utilisateurs</a>
+
+  <h1>Supprimer un utilisateur</h1>
+
+  <p class="message">Chargement de l'utilisateur...</p>
+}

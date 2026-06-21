@@ -1,0 +1,26 @@
+<a class="back-link" routerLink="/proprietes-medicinales">← Retour aux propriétés médicinales</a>
+
+<h1>Modifier une propriété médicinale</h1>
+
+@if (propriete$ | async; as propriete) {
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <form [formGroup]="proprieteForm" (ngSubmit)="enregistrer(propriete)">
+    <div class="form-field">
+      <label for="nomPropriete">Nom de la propriété</label>
+
+      <input id="nomPropriete" type="text" formControlName="nomPropriete">
+
+      @if (nomPropriete && nomPropriete.invalid && nomPropriete.touched) {
+        <p class="error">Le nom est obligatoire.</p>
+      }
+    </div>
+
+    <button class="save-button" type="submit">Enregistrer les modifications</button>
+  </form>
+}
+@else {
+  <p class="message">Chargement...</p>
+}

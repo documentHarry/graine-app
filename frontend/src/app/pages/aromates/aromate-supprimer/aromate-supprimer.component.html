@@ -1,0 +1,45 @@
+@if (aromate$ | async; as aromate) {
+  <a class="back-link" [routerLink]="['/aromates', aromate.idAromate]">← Détail de l’aromate</a>
+
+  <h1>Supprimer un aromate</h1>
+
+  <section class="delete-card">
+    <h2>{{ aromate.variete.nom }}</h2>
+
+    <p class="scientifique">{{ aromate.variete.espece.nomScientifique }}</p>
+    <p><strong>Espèce: </strong>{{ aromate.variete.espece.nomCommun }}</p>
+
+    @if (aromate.partieUtilisee) {
+      <p><strong>Partie utilisée: </strong>{{ aromate.partieUtilisee }}</p>
+    }
+
+    @if (aromate.propriete) {
+      <p><strong>Propriété: </strong>{{ aromate.propriete }}</p>
+    }
+
+    @if (aromate.usageCulinaire) {
+      <p><strong>Usage culinaire: </strong>{{ aromate.usageCulinaire }}</p>
+    }
+
+    @if (message) {
+      <p class="message-card">{{ message }}</p>
+    }
+
+    <p>
+      Cet aromate peut être supprimé.
+      Les liens avec ses propriétés médicinales seront supprimés automatiquement.
+    </p>
+
+    <div class="actions">
+      <button type="button" class="delete-button" (click)="supprimerAromate(aromate)">Supprimer</button>
+      <button type="button" class="cancel-button" (click)="annuler(aromate)">Annuler</button>
+    </div>
+  </section>
+}
+@else {
+  <a class="back-link" routerLink="/aromates">← Retour aux aromates</a>
+
+  <h1>Supprimer un aromate</h1>
+
+  <p class="message">Chargement de l’aromate...</p>
+}

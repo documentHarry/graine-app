@@ -1,0 +1,74 @@
+<div class="page-header">
+  <h2>Utilisateurs</h2>
+  <a class="add-link" routerLink="/utilisateurs/ajouter">Ajouter un utilisateur</a>
+</div>
+
+@if (utilisateurs$ | async; as utilisateurs) {
+
+  @if (utilisateurs.length === 0) {
+    <p>Aucun utilisateur trouvé.</p>
+  }
+  @else {
+    <div class="utilisateurs-layout">
+
+      <app-utilisateur-filtres
+        [(nomRecherche)]="nomRecherche"
+        [(prenomRecherche)]="prenomRecherche"
+        [(emailRecherche)]="emailRecherche"
+        [(statutRecherche)]="statutRecherche"
+        [(roleRecherche)]="roleRecherche"
+        [(adresseRecherche)]="adresseRecherche"
+        [roles]="rolesDisponibles(utilisateurs)">
+      </app-utilisateur-filtres>
+
+      <section class="utilisateurs-zone">
+        @if (utilisateursFiltres(utilisateurs).length === 0) {
+          <p>Aucun utilisateur trouvé. Cliquez sur la croix pour réinitialiser les filtres.</p>
+        }
+        @else {
+          <section class="utilisateurs-grid">
+            @for (utilisateur of utilisateursFiltres(utilisateurs); track utilisateur.idUtilisateur) {
+              <article class="utilisateur-card">
+                <header class="utilisateur-header">
+                  <div>
+                    <h2>{{ getNomComplet(utilisateur) }}</h2>
+                    <p class="email">{{ utilisateur.email }}</p>
+                  </div>
+
+                  <span
+                    class="adresses-count"
+                    [class.empty]="getNombreAdresses(utilisateur) === 0">
+                    {{ getNombreAdresses(utilisateur) }}
+                  </span>
+                </header>
+
+                <div class="infos">
+                  <p><strong>Statut: </strong>{{ getStatutUtilisateur(utilisateur) }}</p>
+                  <p><strong>Rôle: </strong>{{ getRolesUtilisateur(utilisateur) }}</p>
+
+                  @if (utilisateur.dateInscription) {
+                    <p><strong>Date d'inscription: </strong>{{ utilisateur.dateInscription }}</p>
+                  }
+
+                  @if (getNombreAdresses(utilisateur) > 0) {
+                    <p><strong>Adresses: </strong>{{ getNombreAdresses(utilisateur) }}</p>
+                  }
+                  @else {
+                    <p><strong>Adresses: </strong>Aucune adresse enregistrée</p>
+                  }
+                </div>
+
+                <a class="details-link" [routerLink]="['/utilisateurs', utilisateur.idUtilisateur]">Voir en détail</a>
+              </article>
+            }
+          </section>
+        }
+      </section>
+
+    </div>
+  }
+
+}
+@else {
+  <p>Chargement des utilisateurs...</p>
+}

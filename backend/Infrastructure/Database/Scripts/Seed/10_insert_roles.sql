@@ -1,0 +1,6 @@
+USE graines;
+
+INSERT INTO Role (NomRole) VALUES
+('CLIENT'),
+('GESTIONNAIRE_CATALOGUE'),
+('ADMIN');

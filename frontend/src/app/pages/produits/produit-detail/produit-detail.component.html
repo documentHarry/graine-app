@@ -1,0 +1,68 @@
+<a class="back-link" routerLink="/produits">← Produits</a>
+
+@if (produit$ | async; as produit) {
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+  <article class="detail-card">
+    <header class="detail-header">
+      <div>
+        <h1>{{ produit.intitule }}</h1>
+        <p class="variete">{{ produit.variete.nom }}</p>
+      </div>
+
+      <span class="statut" [class.inactif]="produit.quantite === 0">{{ getStatutProduit(produit) }}</span>
+    </header>
+
+    <section class="top-section">
+      <div class="image-zone">
+        @if (getImageProduit(produit)) {
+          <img [src]="getImageProduit(produit)" [alt]="produit.intitule">
+        }
+        @else {
+          <div class="image-placeholder">Image non disponible</div>
+        }
+      </div>
+
+      <div class="resume">
+        <p class="prix">{{ produit.prixUnitaire }} €</p>
+        <p><strong>Quantité: </strong>{{ produit.quantite }}</p>
+        <p><strong>Bio: </strong>{{ getLabelBio(produit) }}</p>
+
+        @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+          <div class="actions">
+            <a class="edit-link" [routerLink]="['/produits/modifier', produit.idProduit]">
+              Modifier le produit
+            </a>
+
+            <button type="button" class="delete-button" (click)="supprimerProduit(produit)">
+              Supprimer le produit
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section>
+      <h3>Culture</h3>
+
+      <div class="info-grid">
+        @if (produit.variete.nom) {
+          <p><strong>Variété: </strong>{{ produit.variete.nom }}</p>
+        }
+
+        @if (produit.variete.espece.nomCommun) {
+          <p><strong>Nom commun: </strong>{{ produit.variete.espece.nomCommun }}</p>
+        }
+
+        @if (produit.variete.espece.nomScientifique) {
+          <p><strong>Nom scientifique: </strong><span class="italic">{{ produit.variete.espece.nomScientifique }}</span></p>
+        }
+      </div>
+    </section>
+  </article>
+}
+@else {
+  <p class="message">Chargement du produit...</p>
+}

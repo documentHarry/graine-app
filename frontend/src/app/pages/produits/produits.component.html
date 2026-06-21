@@ -1,0 +1,68 @@
+@if (categorieId) {
+  <a class="back-link" routerLink="/categories">← Catégories</a>
+}
+
+<div class="page-header">
+  <h2>Produits</h2>
+
+  @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+    @if (!categorieId) {
+      <a class="add-link" routerLink="/produits/ajouter">Ajouter un produit</a>
+    }
+  }
+</div>
+
+@if (produits$ | async; as produits) {
+
+  <div class="produits-layout">
+
+    <app-produit-filtres
+      [(recherche)]="recherche"
+      [(stockRecherche)]="stockRecherche"
+      [(prixMinRecherche)]="prixMinRecherche"
+      [(prixMaxRecherche)]="prixMaxRecherche"
+      [(varieteRecherche)]="varieteRecherche"
+      [(especeRecherche)]="especeRecherche"
+      [varietes]="varietesDisponibles(produits)"
+      [especes]="especesDisponibles(produits)"
+      [prixMinimumDisponible]="prixMinimumDisponible(produits)"
+      [prixMaximumDisponible]="prixMaximumDisponible(produits)">
+    </app-produit-filtres>
+
+    <section class="produits-zone">
+      @if (produitsFiltres(produits).length === 0) {
+        <p>Aucun produit trouvé. Cliquez sur la croix pour réinitialiser les filtres</p>
+      }
+      @else {
+        <section class="produits-grid">
+          @for (produit of produitsFiltres(produits); track produit.idProduit) {
+            <article class="produit-card">
+              <h3>{{ produit.intitule }}</h3>
+
+              <div class="infos">
+                <p><strong>Variété: </strong>{{ produit.variete.nom }}</p>
+                <p><strong>Espèce: </strong>{{ produit.variete.espece.nomCommun }}</p>
+                <p class="nom-scientifique">{{ produit.variete.espece.nomScientifique }}</p>
+              </div>
+
+              <div class="produit-footer">
+                <a class="details-link" [routerLink]="['/produits', produit.idProduit]">
+                  Voir en détail
+                </a>
+
+                <span class="prix">{{ produit.prixUnitaire }} €</span>
+                <span class="quantite">Quantité: {{ produit.quantite }}</span>
+                <span class="statut" [class.inactif]="produit.quantite === 0">{{ getStatutProduit(produit) }}</span>
+              </div>
+            </article>
+          }
+        </section>
+      }
+    </section>
+
+  </div>
+
+}
+@else {
+  <p>Chargement des produits...</p>
+}

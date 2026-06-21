@@ -1,0 +1,65 @@
+<div class="page-header">
+  <h2>Aromates</h2>
+  @if (authService.hasAnyRole(['GESTIONNAIRE_CATALOGUE', 'ADMIN'])) {
+    <a class="add-link" routerLink="/aromates/ajouter">Ajouter un aromate</a>
+  }
+</div>
+
+@if (aromates$ | async; as aromates) {
+  <div class="aromates-layout">
+    <app-aromate-filtres
+      [(rechercheNom)]="rechercheNom"
+      [(especeRecherche)]="especeRecherche"
+      [(partieUtiliseeRecherche)]="partieUtiliseeRecherche"
+      [(usageCulinaireRecherche)]="usageCulinaireRecherche"
+      [especes]="especesDisponibles(aromates)"
+      [partiesUtilisees]="partiesUtiliseesDisponibles(aromates)"
+      [usagesCulinaires]="usagesCulinairesDisponibles(aromates)">
+    </app-aromate-filtres>
+
+    <section class="aromates-zone">
+      @if (aromatesFiltres(aromates).length === 0) {
+        <p>Aucun aromate trouvé. Cliquez sur la croix pour réinitialiser les filtres.</p>
+      }
+      @else {
+        <section class="aromates-grid">
+          @for (aromate of aromatesFiltres(aromates); track aromate.idAromate) {
+            <article class="aromate-card">
+              <header class="aromate-header">
+                <div>
+                  <h2>{{ aromate.variete.nom }}</h2>
+                  <p class="scientifique">{{ aromate.variete.espece.nomScientifique }}</p>
+                </div>
+              </header>
+
+              <div class="infos">
+                <p><strong>Espèce: </strong>{{ aromate.variete.espece.nomCommun }}</p>
+
+                @if (aromate.partieUtilisee) {
+                  <p><strong>Partie utilisée: </strong>{{ aromate.partieUtilisee }}</p>
+                }
+
+                @if (aromate.propriete) {
+                  <p><strong>Propriété: </strong>{{ aromate.propriete }}</p>
+                }
+
+                @if (aromate.usageCulinaire) {
+                  <p><strong>Usage culinaire: </strong>{{ aromate.usageCulinaire }}</p>
+                }
+
+                @if (getProprietesMedicinales(aromate).length > 0) {
+                  <p><strong>Propriétés médicinales: </strong>{{ getProprietesMedicinales(aromate).join(', ') }}</p>
+                }
+              </div>
+
+              <a class="details-link" [routerLink]="['/aromates', aromate.idAromate]">Voir en détail</a>
+            </article>
+          }
+        </section>
+      }
+    </section>
+  </div>
+}
+@else {
+  <p>Chargement des aromates...</p>
+}

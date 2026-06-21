@@ -1,0 +1,23 @@
+<a class="back-link" routerLink="/proprietes-medicinales">← Retour aux propriétés médicinales</a>
+
+<h1>Supprimer une propriété médicinale</h1>
+
+@if (propriete$ | async; as propriete) {
+  <section class="delete-card">
+    <h2>{{ propriete.nomPropriete }}</h2>
+
+    @if (message) {
+      <p class="message-card">{{ message }}</p>
+    }
+
+    <p>Cette propriété médicinale sera supprimée définitivement.</p>
+
+    <div class="actions">
+      <button type="button" class="delete-button" (click)="supprimerPropriete(propriete)">Supprimer</button>
+      <button type="button" class="cancel-button" (click)="annuler()">Annuler</button>
+    </div>
+  </section>
+}
+@else {
+  <p class="message">Chargement...</p>
+}
