@@ -9,7 +9,7 @@ for /f "usebackq delims=" %%P in (`powershell -NoProfile -Command "$p = Read-Hos
 
 echo Creation de la base et des tables...
 
-copy /b "..\MySql\00_create_database_and_all_tables.sql" "%SCRIPT%" > nul
+copy /b "..\Scripts\MySql\00_create_database_and_all_tables.sql" "%SCRIPT%" > nul
 
 "%MYSQL%" --default-character-set=utf8mb4 -h %SERVER% -u %USER% -p%MYSQL_PASSWORD% < "%SCRIPT%"
 
@@ -26,18 +26,18 @@ if "%ROW_COUNT%"=="0" (
 
     type nul > "%SCRIPT%"
 
-    type "..\Seed\01_insert_categories.sql" >> "%SCRIPT%"
-    type "..\Seed\02_insert_especes.sql" >> "%SCRIPT%"
-    type "..\Seed\03_insert_varietes.sql" >> "%SCRIPT%"
-    type "..\Seed\04_insert_aromates.sql" >> "%SCRIPT%"
-    type "..\Seed\05_insert_proprietes_medicinales.sql" >> "%SCRIPT%"
-    type "..\Seed\06_insert_aromates_proprietes.sql" >> "%SCRIPT%"
-    type "..\Seed\07_insert_utilisateurs.sql" >> "%SCRIPT%"
-    type "..\Seed\08_insert_localites.sql" >> "%SCRIPT%"
-    type "..\Seed\09_insert_adresses_livraisons.sql" >> "%SCRIPT%"
-    type "..\Seed\10_insert_roles.sql" >> "%SCRIPT%"
-    type "..\Seed\11_insert_utilisateur_roles.sql" >> "%SCRIPT%"
-    type "..\Seed\12_insert_produits.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\01_insert_categories.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\02_insert_especes.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\03_insert_varietes.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\04_insert_aromates.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\05_insert_proprietes_medicinales.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\06_insert_aromates_proprietes.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\07_insert_utilisateurs.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\08_insert_localites.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\09_insert_adresses_livraisons.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\10_insert_roles.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\11_insert_utilisateur_roles.sql" >> "%SCRIPT%"
+    type "..\Scripts\Seed\12_insert_produits.sql" >> "%SCRIPT%"
 
     "%MYSQL%" --default-character-set=utf8mb4 -h %SERVER% -u %USER% -p%MYSQL_PASSWORD% graines < "%SCRIPT%"
 
