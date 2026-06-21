@@ -260,8 +260,6 @@ Localite
 
 La sécurité est appliquée à deux niveaux : interface utilisateur et API.
 
----
-
 # Installation
 
 ## Prérequis
@@ -276,57 +274,94 @@ La sécurité est appliquée à deux niveaux : interface utilisateur et API.
 - Node.js v22.12.0
 - Angular CLI
 
+Si Angular CLI n'est pas installé :
+
 ```bash
 npm install -g @angular/cli
 ```
 
 ---
 
+# Récupération du projet
+
+1. Créer un nouveau dossier depuis l'Explorateur Windows.
+2. Faire un clic droit sur ce dossier puis **Ouvrir avec Visual Studio Code**.
+3. Ouvrir un terminal (`Ctrl + ù`).
+
+Cloner le dépôt :
+
+```bash
+git clone https://github.com/documentHarry/graine-app.git
+cd graine-app
+```
+
+---
+
 # Installation de la base de données
 
-Depuis :
+Depuis la racine du projet :
 
-```text
-backend/Infrastructure/Database/Scripts
+```bash
+cd backend\Infrastructure\Database\Scripts
 ```
 
 ## SQL Server
 
 ```cmd
-setup-db-sqlserver.bat
+.\setup-db-sqlserver.bat
 ```
 
 ## MySQL
 
 ```cmd
-setup-db-mysql.bat
+.\setup-db-mysql.bat
 ```
 
 Les scripts :
 
-- créent la base
+- créent la base de données `graines`
 - créent les tables
 - insèrent les données de démonstration
-- configurent automatiquement `appsettings.json`.
 
 ---
 
-# Lancement du backend
+# Installation et lancement du frontend
 
-Depuis le dossier :
-
-```text
-backend
-```
-
-Exécuter :
+Depuis le même terminal :
 
 ```bash
+cd ../../../../frontend
+npm install
+ng serve --open
+```
+
+Si la commande `ng` n'est pas reconnue :
+
+```bash
+npm install -g @angular/cli
+ng serve --open
+```
+
+L'application sera disponible sur :
+
+```text
+http://localhost:4200
+```
+
+---
+
+# Installation et lancement du backend
+
+Ouvrir un second terminal (`Ctrl + ù`).
+
+```bash
+cd graine-app
+cd backend
 dotnet restore
 dotnet run --project Api/Api.csproj
 ```
 
-API disponible sur :
+L'API sera disponible sur :
 
 ```text
 http://localhost:5274
@@ -334,31 +369,15 @@ http://localhost:5274
 
 ---
 
-# Lancement du frontend
+# Utilisation
 
-Depuis le dossier :
-
-```text
-frontend
-```
-
-Installer les dépendances :
-
-```bash
-npm install
-```
-
-Démarrer l'application :
-
-```bash
-ng serve --open
-```
-
-Application disponible sur :
+Retourner sur le premier terminal puis ouvrir :
 
 ```text
 http://localhost:4200
 ```
+
+---
 
 # Comptes de test
 
@@ -368,23 +387,16 @@ http://localhost:4200
 | GESTIONNAIRE_CATALOGUE | daan27@example.org | `iFVsP9Ma(6` |
 | CLIENT | mariannesimon@example.org | `r%K4Ncv1x(` |
 
-Le compte administrateur permet de tester l'ensemble des fonctionnalités de l'application.
-
----
+Le compte **ADMIN** permet de tester l'ensemble des fonctionnalités de l'application.
 
 # Génération de la version de production
 
 ## Frontend
 
-Depuis le dossier :
-
-```text
-frontend
-```
-
-Exécuter :
+Ouvrir un terminal (`Ctrl + ù`) puis exécuter :
 
 ```bash
+cd graine-app/frontend
 ng build
 ```
 
@@ -394,17 +406,14 @@ Les fichiers générés se trouvent dans :
 frontend/dist
 ```
 
+---
+
 ## Backend
 
-Depuis le dossier :
-
-```text
-backend
-```
-
-Exécuter :
+Ouvrir un second terminal (`Ctrl + ù`) puis exécuter :
 
 ```bash
+cd graine-app/backend
 dotnet publish Api/Api.csproj -c Release -o publish
 ```
 
@@ -414,18 +423,28 @@ Les fichiers générés se trouvent dans :
 backend/publish
 ```
 
-## Vérification
+---
+
+## Lancement de la version publiée
+
+Depuis le dossier publié :
 
 ```bash
 cd publish
 dotnet Api.dll
 ```
 
-L'API publiée est alors disponible sur :
+Une fenêtre du navigateur s'ouvre automatiquement.
+
+Ajouter `/aromates` à la fin de l'URL puis valider.
+
+Exemple :
 
 ```text
-http://localhost:5274
+http://localhost:5000/aromates
 ```
+
+L'application est alors prête à être utilisée.
 
 ---
 
