@@ -436,12 +436,12 @@ dotnet Api.dll
 
 Une fenêtre du navigateur s'ouvre automatiquement.
 
-Ajouter `/aromates` à la fin de l'URL puis valider.
+Ajouter `/api/aromates` à la fin de l'URL puis valider.
 
 Exemple :
 
 ```text
-http://localhost:5000/aromates
+http://localhost:5000/api/aromates
 ```
 
 L'application est alors prête à être utilisée.
