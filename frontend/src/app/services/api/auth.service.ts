@@ -18,9 +18,7 @@ export class AuthService {
   private utilisateur: LoginResponse | null = null;
   private timerInactivite: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   login(identifiants: AuthenticationRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, identifiants).pipe(
@@ -32,7 +30,10 @@ export class AuthService {
 
   setUtilisateur(utilisateur: LoginResponse): void {
     this.utilisateur = utilisateur;
+
+    sessionStorage.setItem('token', utilisateur.token);
     sessionStorage.setItem('utilisateur', JSON.stringify(utilisateur));
+
     this.demarrerSurveillanceInactivite();
   }
 
@@ -53,8 +54,12 @@ export class AuthService {
     return this.utilisateur;
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem('token');
+  }
+
   isLoggedIn(): boolean {
-    return this.getUtilisateur() !== null;
+    return this.getUtilisateur() !== null && this.getToken() !== null;
   }
 
   hasRole(role: string): boolean {
@@ -75,7 +80,9 @@ export class AuthService {
 
   logout(): void {
     this.utilisateur = null;
+
     sessionStorage.removeItem('utilisateur');
+    sessionStorage.removeItem('token');
 
     if (this.timerInactivite) {
       clearTimeout(this.timerInactivite);
